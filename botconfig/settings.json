@@ -3,7 +3,7 @@
     "default_cooldown_in_sec" : 1.5,
 
     "ping_message": true,
-    "delete_commands": true,
+    "delete_commands": false,
     "somethingwentwrong_cmd": true,
 
     "messages": {
