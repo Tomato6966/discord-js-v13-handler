@@ -37,14 +37,8 @@ module.exports = async (client, message) => {
           });
         }
         try {
-          //try to delete the message of the user who ran the cmd, if the setting is enabled (If you activate the option you must change the .reply in the commands to avoid errors)
-          if (settings.delete_commands) {
-            try {
-              message.delete()
-            } catch {}
-          }
           //if Command has specific permission return error
-          if (command.memberpermissions && command.memberpermissions.length > 0 && !message.member.hasPermission(command.memberpermissions)) {
+          if (command.memberpermissions && command.memberpermissions.length > 0 && !message.member.permissions.has(command.memberpermissions)) {
             return message.reply({ embeds: [new Discord.MessageEmbed()
                 .setColor(ee.wrongcolor)
                 .setFooter(ee.footertext, ee.footericon)

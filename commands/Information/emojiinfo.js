@@ -40,18 +40,18 @@ module.exports = {
         .setTitle(`**Emoji Information for: __\`${emoji.name.toLowerCase()}\`__**`)
         .setColor(ee.color)
         .setThumbnail(emoji.url)
-        .addField("**General:**", 
-          `**ID:** \`${emoji.id}\`\n` +
-          `**URL:** [\`LINK\`](${emoji.url})\n` +
-          `**AUTHOR:** ${authorFetch} (\`${authorFetch.id}\`)\n` +
+        .addField("**General:**", [
+          `**ID:** \`${emoji.id}\``,
+          `**URL:** [\`LINK\`](${emoji.url})`,
+          `**AUTHOR:** ${authorFetch} (\`${authorFetch.id}\`)`,
           `**CREATED AT:** \`${moment(emoji.createdTimestamp).format("DD/MM/YYYY") + " | " +  moment(emoji.createdTimestamp).format("hh:mm:ss")}\``
-        )
-        .addField("**Others:**", 
-          `**Requires Colons:** \`${checkOrCross(emoji.requireColons)}\`\n` +
-          `**Animated:** \`${checkOrCross(emoji.animated)}\`\n` +
-          `**Deleteable:** \`${checkOrCross(emoji.deleteable)}\`\n` +
-          `**Managed:** \`${checkOrCross(emoji.managed)}\``
-        ).setFooter(ee.footertext, ee.footericon)
+        ])
+        .addField("**Others:**", [
+          `**Requires Colons:** \`${checkOrCross(emoji.requireColons)}\``,
+          `**Animated:** \`${checkOrCross(emoji.animated)}\``,
+          `**Deleteable:** \`${checkOrCross(emoji.deleteable)}\``,
+          `**Managed:** \`${checkOrCross(emoji.managed)}\``,
+        ]).setFooter(ee.footertext, ee.footericon)
         message.reply({embeds: [embed]})
       }
       else if (emoji1 = animatedEmoteRegex.exec(message)) {
@@ -66,18 +66,18 @@ module.exports = {
         .setTitle(`**Emoji Information for: __\`${emoji.name.toLowerCase()}\`__**`)
         .setColor(ee.color)
         .setThumbnail(emoji.url)
-        .addField("**General:**", 
-          `**ID:** \`${emoji.id}\`\n` +
-          `**URL:** [\`LINK\`](${emoji.url})\n` +
-          `**AUTHOR:** ${authorFetch} (\`${authorFetch.id}\`)\n` +
+        .addField("**General:**", [
+          `**ID:** \`${emoji.id}\``,
+          `**URL:** [\`LINK\`](${emoji.url})`,
+          `**AUTHOR:** ${authorFetch} (\`${authorFetch.id}\`)`,
           `**CREATED AT:** \`${moment(emoji.createdTimestamp).format("DD/MM/YYYY") + " | " +  moment(emoji.createdTimestamp).format("hh:mm:ss")}\``
-        )
-        .addField("**Others:**", 
-          `**Requires Colons:** \`${checkOrCross(emoji.requireColons)}\`\n` +
-          `**Animated:** \`${checkOrCross(emoji.animated)}\`\n` +
-          `**Deleteable:** \`${checkOrCross(emoji.deleteable)}\`\n` +
-          `**Managed:** \`${checkOrCross(emoji.managed)}\``
-        ).setFooter(ee.footertext, ee.footericon)
+        ])
+        .addField("**Others:**", [
+          `**Requires Colons:** \`${checkOrCross(emoji.requireColons)}\``,
+          `**Animated:** \`${checkOrCross(emoji.animated)}\``,
+          `**Deleteable:** \`${checkOrCross(emoji.deleteable)}\``,
+          `**Managed:** \`${checkOrCross(emoji.managed)}\``,
+        ]).setFooter(ee.footertext, ee.footericon)
         message.reply({embeds: [embed]})
       }
       else {
