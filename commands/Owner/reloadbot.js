@@ -42,7 +42,7 @@ module.exports = {
       let tempmsg = await message.channel.send(new MessageEmbed()
         .setColor(ee.color).setFooter(ee.footertext, ee.footericon)
         .setAuthor("Reloading ...", "https://images-ext-1.discordapp.net/external/ANU162U1fDdmQhim_BcbQ3lf4dLaIQl7p0HcqzD5wJA/https/cdn.discordapp.com/emojis/756773010123522058.gif", "https://discord.gg/FQGXbypRf8")
-        .setTitle(`> Reloading **\`${client.commands.size} Commands\`**\n\n> Reloading **\`${eventcount} Events\`**\n\n> Reloading **\`${client.handlers.length} Modules/Features\`**`)
+        .setTitle(`> Reloading **\`${client.commands.size} Commands\`**\n\n> Reloading **\`${eventcount} Events\`**\n\n> Reloading **\`${client.handlers.size} Modules/Features\`**`)
       )
       //clear the commands collection
       await client.commands.clear();
@@ -67,7 +67,7 @@ module.exports = {
       //wait 1 Sec
       await delay(1000);
       //REMOVE ALL BASICS HANDLERS
-      await client.handlers.forEach(handler => {
+      await client.handlers.forEach((k,handler) => {
         try {
           //delete it from the cache
           delete require.cache[require.resolve(`../../handlers/${handler}`)];
@@ -91,7 +91,7 @@ module.exports = {
         embed: new MessageEmbed()
           .setColor(ee.color).setFooter(ee.footertext, ee.footericon)
           .setAuthor("Successfully Reloaded:", "https://cdn.discordapp.com/emojis/833101995723194437.gif?v=1", "https://discord.gg/FQGXbypRf8")
-          .setTitle(`> **\`${client.commands.size} Commands\`**\n\n> **\`${eventcount} Events\`**\n\n> **\`${client.handlers.length} Modules/Features\`**`)
+          .setTitle(`> **\`${client.commands.size} Commands\`**\n\n> **\`${eventcount} Events\`**\n\n> **\`${client.handlers.size} Modules/Features\`**`)
       })
     } catch (e) {
       console.log(String(e.stack).bgRed)

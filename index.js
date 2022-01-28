@@ -44,11 +44,15 @@ client.slashCommands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.categories = require("fs").readdirSync(`./commands`);
 //Require the Handlers                  Add the antiCrash file too, if its enabled
+function handlers(){
 ["events", "commands", "slashCommands", settings.antiCrash ? "antiCrash" : null]
     .filter(Boolean)
     .forEach(h => {
         require(`./handlers/${h}`)(client);
     })
+  }
+  handlers()
+  module.exports.handlers = handlers;
 //Start the Bot
 client.login(config.token)
 
