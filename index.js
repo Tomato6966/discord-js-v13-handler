@@ -39,13 +39,14 @@ const client = new Discord.Client({
 });
 //Define some Global Collections
 client.commands = new Discord.Collection();
+client.handlers = new Discord.Collection();
 client.cooldowns = new Discord.Collection();
 client.slashCommands = new Discord.Collection();
 client.aliases = new Discord.Collection();
 client.categories = require("fs").readdirSync(`./commands`);
 //Require the Handlers                  Add the antiCrash file too, if its enabled
 function handlers(){
-["events", "commands", "slashCommands", settings.antiCrash ? "antiCrash" : null]
+["events", "commands", "slashCommands","handlers", settings.antiCrash ? "antiCrash" : null]
     .filter(Boolean)
     .forEach(h => {
         require(`./handlers/${h}`)(client);

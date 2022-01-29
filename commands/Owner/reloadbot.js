@@ -18,7 +18,7 @@ module.exports = {
   description: "Reloads the Bot, All Commands Events, etc.",
   memberpermissions: [], //Only allow members with specific Permissions to execute a Commmand [OPTIONAL]
   requiredroles: [], //Only allow specific Users with a Role to execute a Command [OPTIONAL]
-  alloweduserids: settings.ownerIDS, //Only allow specific Users to execute a Command [OPTIONAL]
+  alloweduserids: [], //Only allow specific Users to execute a Command [OPTIONAL]
   minargs: 0, // minimum args for the message, 0 == none [OPTIONAL]
   maxargs: 1, // maximum args for the message, 0 == none [OPTIONAL]
   minplusargs: 0, // minimum args for the message, splitted with "++" , 0 == none [OPTIONAL]
@@ -39,11 +39,15 @@ module.exports = {
         eventcount += events.length
       })
       //send a temp message
-      let tempmsg = await message.channel.send(new MessageEmbed()
-        .setColor(ee.color).setFooter(ee.footertext, ee.footericon)
-        .setAuthor("Reloading ...", "https://images-ext-1.discordapp.net/external/ANU162U1fDdmQhim_BcbQ3lf4dLaIQl7p0HcqzD5wJA/https/cdn.discordapp.com/emojis/756773010123522058.gif", "https://discord.gg/FQGXbypRf8")
-        .setTitle(`> Reloading **\`${client.commands.size} Commands\`**\n\n> Reloading **\`${eventcount} Events\`**\n\n> Reloading **\`${client.handlers.length} Modules/Features\`**`)
-      )
+      let tempmsg = await message.channel.send({
+        embeds: [new MessageEmbed()
+          .setColor(ee.color)
+          .setFooter({ text: ee.footertext, iconURL: ee.footericon })
+          .setThumbnail(ee.footericon)
+          .setTitle("Reloading ...")
+          .setDescription(`> Reloading **\`${client.commands.size} Commands\`**\n\n> Reloading **\`${eventcount} Events\`**\n\n> Reloading **\`${client.handlers.size} Modules/Features\`**`)
+        ]
+      })
       //clear the commands collection
       await client.commands.clear();
       //Delete all files from the cache
@@ -57,7 +61,7 @@ module.exports = {
             delete require.cache[require.resolve(`../../commands/${dir}/${file}.js`)]
             //log if successful
             console.log(`SUCCESS :: ../../commands/${dir}/${file}.js`)
-          } catch {}
+          } catch { }
         }
       })
       //WAIT 1 SEC
@@ -67,12 +71,12 @@ module.exports = {
       //wait 1 Sec
       await delay(1000);
       //REMOVE ALL BASICS HANDLERS
-      await client.handlers.forEach((k,handler) => {
+      await client.handlers.forEach((k, handler) => {
         try {
           //delete it from the cache
           delete require.cache[require.resolve(`../../handlers/${handler}`)];
           //log if successful
-          console.log(`SUCCESS :: ../../handlers/${handler}`);
+          console.log(`SUCCESS : ../../handlers/${handler}`.bold.green);
         } catch (e) {
           console.log(e)
         }
@@ -83,20 +87,26 @@ module.exports = {
       //wait 1 Sec
       await delay(1000);
       //Load the basics, (commands, dbs, events, etc.)
-      index.handlers();
+
+
+
+      index.handlers()
       //SEND CMDS SUCCESS
-      console.log(client.commands.map(cmd => cmd.name))
       //edit the embed
       await tempmsg.edit({
-        embed: new MessageEmbed()
-          .setColor(ee.color).setFooter(ee.footertext, ee.footericon)
-          .setAuthor("Successfully Reloaded:", "https://cdn.discordapp.com/emojis/833101995723194437.gif?v=1", "https://discord.gg/FQGXbypRf8")
-          .setTitle(`> **\`${client.commands.size} Commands\`**\n\n> **\`${eventcount} Events\`**\n\n> **\`${client.handlers.length} Modules/Features\`**`)
+        embeds: [new MessageEmbed()
+          .setTitle("Successfully Reloaded:")
+          .setDescription(`> **\`${client.commands.size} Commands\`**\n\n> **\`${eventcount} Events\`**\n\n> **\`${client.handlers.size} Modules/Features\`**`)
+          .setColor(ee.color)
+          .setFooter({ text: ee.footertext, iconURL: ee.footericon })
+          .setThumbnail(ee.footericon)
+        ]
       })
+
     } catch (e) {
       console.log(String(e.stack).bgRed)
       return message.channel.send(new MessageEmbed()
-        .setColor(ee.wrongcolor).setFooter(ee.footertext, ee.footericon)
+        .setColor(ee.wrongcolor).setFooter({text:ee.footertext, iconURL:ee.footericon})
         .setTitle(`:x: Something went Wrong`)
         .setDescription(`\`\`\`${String(JSON.stringify(e)).substr(0, 2000)}\`\`\``)
       );
